@@ -64,17 +64,27 @@ CREATE VIEW caronas_em_progresso_view AS
 -- Atualiza nota média do passageiro toda vez que uma nova carona é criada
 
 delimiter //
-CREATE TRIGGER atualiza_nota_passageiro BEFORE UPDATE ON carona_passageiro
-FOR EACH ROW
-BEGIN
-DECLARE numero_avaliacoes int;
-SELECT COUNT(id_carona) FROM carona_passageiro WHERE id_passageiro = NEW.id_passageiro GROUP BY id_passageiro INTO numero_avaliacoes;
-UPDATE usuario SET avaliacao_passageiro = (avaliacao_passageiro + NEW.avaliacao_passageiro) / numero_avaliacoes
-WHERE usuario.id = NEW.id_passageiro;
+	CREATE TRIGGER atualiza_nota_passageiro BEFORE UPDATE ON carona_passageiro
+	FOR EACH ROW
+		BEGIN
+		DECLARE numero_avaliacoes int;
+		SELECT COUNT(id_carona) FROM carona_passageiro WHERE id_passageiro = NEW.id_passageiro GROUP BY id_passageiro INTO numero_avaliacoes;
+		UPDATE usuario SET avaliacao_passageiro = (avaliacao_passageiro + NEW.avaliacao_passageiro) / numero_avaliacoes
+		WHERE usuario.id = NEW.id_passageiro;
 END;//
 delimiter ;
 
+-- Stored procedure para busca de carros
 
+GO
+	CREATE PROCEDURE BuscaModeloCarro --- Declarando o nome da procedure
+	@CampoBusca VARCHAR (20) --- Declarando variável
+	AS
+	SELECT nome --- Consulta
+	FROM modelo_carro
+	WHERE nome like ('%' + @CampoBusca + '%') --- Utilizando variável como filtro para a consulta
+
+--
 -- Index
 
 CREATE INDEX index_carro ON carro(id);
