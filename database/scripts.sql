@@ -102,3 +102,36 @@ CREATE INDEX index_destino ON destino(id);
 CREATE INDEX index_cidade ON cidade(id);
 
 CREATE INDEX index_estado ON estado(id);
+
+
+-- GERENCIAMENTO DE USUARIOS
+
+CREATE USER 'admin'@'localhost' identified by 'admin';
+CREATE USER 'motorista'@'localhost' identified by 'motorista';
+CREATE USER 'passageiro'@'localhost' identified by 'passageiro';
+CREATE USER 'dba'@'localhost' identified by 'dba';
+
+GRANT CREATE, DROP ON carona.* TO 'dba'@'localhost';
+GRANT ALL PRIVILEGES ON carona.* TO 'admin'@'localhost';
+GRANT INSERT, UPDATE on carona.carro TO 'motorista'@'localhost';
+GRANT INSERT on carona.carona TO 'motorista'@'localhost';
+GRANT INSERT, UPDATE on carona.carona_passageiro TO 'motorista'@'localhost';
+GRANT INSERT on carona.carona TO 'passageiro'@'localhost';
+GRANT INSERT, UPDATE on carona.carona_passageiro TO 'passageiro'@'localhost';
+
+ANALYZE TABLE carona;
+ANALYZE TABLE carro;
+ANALYZE TABLE modelo_carro;
+ANALYZE TABLE usuario;
+ANALYZE TABLE carona_passageiro;
+ANALYZE TABLE destino;
+ANALYZE TABLE estado;
+ANALYZE TABLE cidade;
+OPTIMIZE TABLE carona;
+OPTIMIZE TABLE carro;
+OPTIMIZE TABLE modelo_carro;
+OPTIMIZE TABLE usuario;
+OPTIMIZE TABLE carona_passageiro;
+OPTIMIZE TABLE destino;
+OPTIMIZE TABLE estado;
+OPTIMIZE TABLE cidade;
