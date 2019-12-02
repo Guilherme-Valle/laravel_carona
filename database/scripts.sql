@@ -135,3 +135,19 @@ OPTIMIZE TABLE carona_passageiro;
 OPTIMIZE TABLE destino;
 OPTIMIZE TABLE estado;
 OPTIMIZE TABLE cidade;
+
+-- Procedure com transaction
+
+GO
+	CREATE PROCEDURE ExcluiCarrosInativos --- Declarando o nome da procedure
+	AS
+	START TRANSACTION;
+	DELETE FROM Carro WHERE id NOT IN (SELECT id_carro FROM CARONA);
+	COMMIT;
+
+-- Backup e restore
+-- Backup
+mysqldump -u root -p carona > backup_carona.sql
+
+-- restore
+mysql -u root -p carona_backup < backup_carona.sql
