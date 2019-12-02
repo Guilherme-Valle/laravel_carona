@@ -142,7 +142,7 @@ GO
 	CREATE PROCEDURE ExcluiCarrosInativos --- Declarando o nome da procedure
 	AS
 	START TRANSACTION;
-	DELETE FROM Carro WHERE id NOT IN (SELECT id_carro FROM CARONA);
+	DELETE FROM Carro WHERE id NOT IN (SELECT id_carro FROM Carona);
 	COMMIT;
 
 -- Backup e restore
